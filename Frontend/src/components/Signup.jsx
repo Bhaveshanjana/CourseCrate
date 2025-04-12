@@ -1,10 +1,49 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const signup = () => {
-  function handleSubmit(e) {
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const newUser = {
+    username: {
+      firstname: firstname,
+      lastname: lastname,
+    },
+    email: email,
+    password: password,
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  }
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/users/register`,
+        newUser
+      );
+      if (response.status === 201) {
+        navigate("/log-in");
+        toast.success("User Signup successfully");
+      } else {
+        if (response.status === "error") {
+          toast.error(response.data.message);
+        }
+      }
+    } catch (error) {
+      toast.error("error  while registering user");
+    }
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPassword("");
+  };
   return (
     <>
       <div className="">
@@ -42,53 +81,49 @@ const signup = () => {
               <p>firstname</p>
               <input
                 type="text"
-                name=""
-                id=""
+                value={firstname}
                 placeholder="Firstname..."
                 onChange={(e) => {
-                  e.target.value;
+                  setFirstName(e.target.value);
                 }}
                 className="p-2 bg-gray-700 w-full rounded-md"
               />
               <p>Lastname</p>
               <input
                 type="text"
-                name=""
-                id=""
+                value={lastname}
                 placeholder="Lastname..."
                 onChange={(e) => {
-                  e.target.value;
+                  setLastName(e.target.value);
                 }}
                 className="p-2 bg-gray-700 w-full rounded-md"
               />
               <p>Email</p>
               <input
                 type="email"
-                name=""
-                id=""
+                value={email}
                 placeholder="example@gmail.com"
                 onChange={(e) => {
-                  e.target.value;
+                  setEmail(e.target.value);
                 }}
                 className="p-2 bg-gray-700 w-full rounded-md"
               />
               <p>Password</p>
               <input
                 type="password"
-                name=""
-                id=""
+                value={password}
                 placeholder="1234567"
                 onChange={(e) => {
-                  e.target.value;
+                  setPassword(e.target.value);
                 }}
                 className="p-2 bg-gray-700 w-full rounded-md"
               />
-              <Link
-                // to={"/Sign-up"}
-                className="flex items-center justify-center bg-red-400 rounded-md p-1.5 mt-4 mb-2 cursor-pointer"
+              <button
+                disabled={!email || !password}
+                className="w-full bg-red-400 rounded-md p-1.5 mt-4 mb-2 cursor-pointer"
               >
                 Signup
-              </Link>
+              </button>
             </div>
           </form>
         </div>
