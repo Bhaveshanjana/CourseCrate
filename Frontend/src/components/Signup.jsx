@@ -23,6 +23,7 @@ const signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Api call for register user
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/users/register`,
@@ -37,7 +38,7 @@ const signup = () => {
         }
       }
     } catch (error) {
-      toast.error("error  while registering user");
+      toast.error(`${error.response.data.errors[0].msg}`);
     }
     setFirstName("");
     setLastName("");
@@ -112,7 +113,7 @@ const signup = () => {
               <input
                 type="password"
                 value={password}
-                placeholder="1234567"
+                placeholder="*******"
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}

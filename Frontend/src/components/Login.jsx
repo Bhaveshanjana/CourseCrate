@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { data, Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { UserDataContext } from "../context/userContext";
 
@@ -19,20 +19,22 @@ const login = () => {
       email: email,
       password: password,
     };
+
+    // Api call for logging user
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/users/login`,
         newUser
       );
       if (response.status === 200) {
-        toast.success("Welcome");
+        toast.success(`Welcome, ${response.data.user.username.firstname}`);
         const data = response.data;
         setUser(data.user);
         localStorage.setItem("token", data.token);
         navigate("/");
       }
     } catch (error) {
-      toast.error("Invaild user");
+      toast.error(`${error.response?.data.errors[0].msg}`);
     }
     setEmail("");
     setPassword("");
@@ -89,7 +91,7 @@ const login = () => {
                 type="password"
                 required
                 value={password}
-                placeholder="1234567"
+                placeholder="******"
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}

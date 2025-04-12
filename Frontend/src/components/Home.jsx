@@ -1,13 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { toast } from "react-toastify";
 
 const home = () => {
   const [courses, setCourses] = useState([]);
+  const [isloggedIn, setIsloggedIn] = useState(false);
 
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("token");
+
+  // function for checking use logged in or not
+  useEffect(() => {
+    if (token) {
+      setIsloggedIn(true);
+    } else {
+      setIsloggedIn(false);
+    }
+  }, []);
+
+  //function for getting all course
   useEffect(() => {
     const course = async () => {
       try {
@@ -22,6 +38,26 @@ const home = () => {
     course();
   }, []);
 
+  // log out function
+  const handleLogOut = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/users/logout`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setIsloggedIn(false);
+    } catch (error) {
+      toast.error(error.response.data.errors[0].msg);
+    }
+    localStorage.removeItem("token");
+    navigate("/log-in");
+  };
+
+  //settings for slids
   var settings = {
     dots: true,
     infinite: false,
@@ -74,29 +110,43 @@ const home = () => {
 
         <div className="flex justify-between pt-6 mx-6">
           <Link to={"/"} className="text-orange-400 text-[18px] lg:text-2xl">
-          CourseCrate 
+            CourseCrate
           </Link>
-          <div className="space-x-2 ">
-            <Link
-              to={"/log-in"}
-              className="text-sm bg-green-500 rounded-md px-2 p-1  lg:text-lg lg:px-3"
+
+          {/* Check use loged in or not and render log out button */}
+
+          {isloggedIn ? (
+            <button
+              onClick={handleLogOut}
+              className="text-sm bg-blue-400/50 rounded-md p-1 px-2 lg:text-lg lg:px-2 cursor-pointer"
             >
-              Login
-            </Link>
-            <Link
-              to={"/sign-up"}
-              className="text-sm bg-blue-400/50 rounded-md p-1 px-2 lg:text-lg lg:px-2"
-            >
-              Signup
-            </Link>
-          </div>
+              Logout
+            </button>
+          ) : (
+            <>
+              <div className="space-x-2 ">
+                <Link
+                  to={"/log-in"}
+                  className="text-sm bg-green-500 rounded-md px-2 p-1  lg:text-lg lg:px-3"
+                >
+                  Login
+                </Link>
+                <Link
+                  to={"/sign-up"}
+                  className="text-sm bg-blue-400/50 rounded-md p-1 px-2 lg:text-lg lg:px-2"
+                >
+                  Signup
+                </Link>
+              </div>
+            </>
+          )}
         </div>
 
         {/* main section 1*/}
 
         <div className="flex justify-center flex-col items-center space-y-4 mt-32 ">
           <h1 className="text-xl text-orange-400 font-medium lg:text-3xl">
-          CourseCrate 
+            CourseCrate
           </h1>
           <p className="text-gray-400 text-sm lg:text-xl">
             Enhance your skill with courses made by experts.
