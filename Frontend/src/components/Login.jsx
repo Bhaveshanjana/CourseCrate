@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { data, Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { UserDataContext } from "../context/userContext";
+import { GoHome } from "react-icons/go";
 
 const login = () => {
   const { user, setUser } = useContext(UserDataContext);
@@ -34,6 +35,10 @@ const login = () => {
         navigate("/");
       }
     } catch (error) {
+      if (error.response?.data.message) {
+        toast.error(toast.error(`${error.response?.data.message}`));
+      }
+
       toast.error(`${error.response?.data.errors[0].msg}`);
     }
     setEmail("");
@@ -47,16 +52,19 @@ const login = () => {
 
         <div className=" flex justify-around space-x-250 ">
           <h1 className="mt-5 text-2xl text-white">CourseCrate</h1>
-          <div className="mt-5 space-x-4 ">
+          <div className="mt-5 space-x-4 flex items-center">
             <Link
               to={"/sign-up"}
-              className="bg-white border p-1 px-4 rounded-md cursor-pointer"
+              className="bg-white border p-0.5 px-4 rounded-md cursor-pointer hover:bg-yellow-400/60 transition-all duration-300 hover:text-white"
             >
               Signup
             </Link>
-            <button className="bg-orange-400/90  px-2 rounded-md text-lg cursor-pointer">
-              Join Now
+            <button className="bg-orange-400/90 p-0.5 px-3 rounded-md cursor-pointer hover:bg-white transition-all duration-200">
+              Join as admin
             </button>
+            <Link to={"/"}>
+              <GoHome className="text-white text-2xl cursor-pointer hover:text-orange-400 transition-all duration-200" />
+            </Link>
           </div>
         </div>
 
@@ -97,7 +105,7 @@ const login = () => {
                 }}
                 className="p-2 bg-gray-700 w-full rounded-md"
               />
-              <button className="w-full bg-red-400 rounded-md p-1.5 mt-4 mb-2 cursor-pointer">
+              <button className="w-full bg-red-400 rounded-md p-1.5 mt-4 mb-2 cursor-pointer hover:bg-blue-950/80 transition-all duration-200">
                 Login
               </button>
             </div>

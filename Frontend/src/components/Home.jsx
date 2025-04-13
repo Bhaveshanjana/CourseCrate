@@ -127,13 +127,13 @@ const home = () => {
               <div className="space-x-2 ">
                 <Link
                   to={"/log-in"}
-                  className="text-sm bg-green-500 rounded-md px-2 p-1  lg:text-lg lg:px-3"
+                  className="text-sm bg-orange-400 rounded-md px-2 p-0.5 lg:text-lg lg:px-3 hover:bg-white"
                 >
                   Login
                 </Link>
                 <Link
                   to={"/sign-up"}
-                  className="text-sm bg-blue-400/50 rounded-md p-1 px-2 lg:text-lg lg:px-2"
+                  className="text-sm bg-green-500 rounded-md p-0.5 px-2 lg:text-lg lg:px-2 hover:bg-gray-500 hover:text-white"
                 >
                   Signup
                 </Link>
@@ -152,22 +152,28 @@ const home = () => {
             Enhance your skill with courses made by experts.
           </p>
           <div className="space-x-3 mt-2">
-            <Link className="bg-white rounded-md px-2 p-2 text-black text-[15px ">
+            <Link
+              to={"/courses"}
+              className="bg-white rounded-md px-2 p-2 text-black text-[15px] hover:bg-gradient-to-l to-yellow-500/40 from-green-600 hover:text-white transition-all duration-200"
+            >
               Explore courses
             </Link>
-            <Link className="bg-green-500 rounded-md px-2 p-2 text-[15px]">
+            <a
+              href={"https://www.youtube.com/"}
+              className="bg-green-500 rounded-md px-2 p-2 text-[15px]"
+            >
               Course video
-            </Link>
+            </a>
           </div>
         </div>
 
         {/* Slider Section- */}
 
         <section className="p-8">
-          <Slider {...settings} className="">
+          <Slider {...settings}>
             {courses.map((courses) => (
-              <div key={courses._id} className="">
-                <div className="lg:w-60 relative transition-transform transform duration-300 hover:scale-105 xl:w-80 lg:px-4 md:w-55 sm:w-80  mt-9 ">
+              <div key={courses._id}>
+                <div className="lg:w-60 relative transition-transform transform duration-300 hover:scale-105 xl:w-80 lg:px-4  md:w-55 sm:w-80  mt-9 mx-auto">
                   <div className=" bg-gray-700 rounded-lg overflow-hidden ">
                     <img
                       src={courses.image.url}
@@ -178,7 +184,7 @@ const home = () => {
                       <h2 className="text-[18px] text-white">
                         {courses.title}
                       </h2>
-                      <button className="px-3 bg-green-900/60 rounded-md my-2 hover:bg-blue-900/50 hover:text-white transition-all duration-200 cursor-pointer">
+                      <button className="px-3 bg-green-500/60 rounded-md my-2 hover:text-white transition-all duration-200 cursor-pointer">
                         Enroll now
                       </button>
                     </div>
