@@ -1,15 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { FaUser } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { RiMenu2Fill } from "react-icons/ri";
 import Menu from "./Menu";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Courses = () => {
   const [open, setOpen] = useState(false);
+  const [course, setCourse] = useState([]);
+
+  // getting all courses
+  useEffect(() => {
+    const courses = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/v1/course/getAllCourses`
+        );
+
+        setCourse(res.data.courses);
+        
+      } catch (error) {
+        const message =
+          error.response?.data?.message ||
+          error.response?.data?.errors?.[0]?.msg ||
+          "Something went wrong. Please try again.";
+        toast.error(message);
+      }
+    };
+    courses();
+  });
 
   return (
-    <div className="bg-blue-950/30 h-screen">
+    <div className="bg-blue-950/30 min-h-screen">
       <div>
         {/* Navbar */}
         <div className="bg-gray-700 flex justify-between items-center p-2 px-4">
@@ -47,6 +71,41 @@ const Courses = () => {
       </div>
       {/* Hamburger */}
       <Menu open={open} />
+
+      {/* Course data */}
+
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 p-4">
+        {course.map((course) => (
+          <div key={course._id} className="max-w-lg mx-auto p-4">
+            <div className="bg-gray-500 rounded-md overflow-hidden">
+              <img
+                src={course.image.url}
+                alt=""
+                className="w-full h-full object-contain "
+              />
+              <div className="mx-2">
+                <h1 className=" text-md font-semibold md:text-lg capitalize">
+                  {course.title}
+                </h1>
+                <p className="text-white line-clamp-2 text-xs capitalize md:text-[15px]">
+                  {course.description}
+                </p>
+              </div>
+              <div className="flex justify-between mx-2 text-sm my-0.5 md:text-lg">
+                <p className="font-bold">
+                  {" "}
+                  ₹ 200{" "}
+                  <span className="line-through text-red-300/90 ">500</span>
+                </p>
+                <p className="text-green-400">20% off</p>
+              </div>
+              <button className="bg-red-400/80 rounded-md text-xs m-1 mx-2 p-0.5 mb-2 text-white px-2 cursor-pointer md:text-[18px] hover:bg-[#522c2c67] hover:transition-all hover:translate-y-0.5">
+                Buy now
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

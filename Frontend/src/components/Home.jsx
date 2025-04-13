@@ -27,12 +27,17 @@ const home = () => {
   useEffect(() => {
     const course = async () => {
       try {
-        const response = await axios.get(
+        const res = await axios.get(
           `${import.meta.env.VITE_BASE_URL}/api/v1/course/getAllCourses`
         );
-        setCourses(response.data.courses);
+        setCourses(res.data.courses);
       } catch (error) {
-        console.log("error in fetching courses-", error);
+        const message =
+          error.response?.data?.message ||
+          error.response?.data?.errors?.[0]?.msg ||
+          "Something went wrong. Please try again.";
+
+        toast.error(message);
       }
     };
     course();
@@ -49,9 +54,15 @@ const home = () => {
           },
         }
       );
+      toast.success(`${response.data.message}`)
       setIsloggedIn(false);
     } catch (error) {
-      toast.error(error.response.data.errors[0].msg);
+      const message =
+        error.response?.data?.message ||
+        error.response?.data?.errors?.[0]?.msg ||
+        "Something went wrong. Please try again.";
+
+      toast.error(message);
     }
     localStorage.removeItem("token");
     navigate("/log-in");
@@ -113,7 +124,7 @@ const home = () => {
             CourseCrate
           </Link>
 
-          {/* Check use loged in or not and render log out button */}
+          {/* Checking user loged in or not */}
 
           {isloggedIn ? (
             <button

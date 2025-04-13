@@ -26,7 +26,14 @@ function App() {
         />
         <Route path="/buy/:courseId" element={<BuyCourse />} />
         <Route path="/Purchased" element={<Purchased />} />
-        <Route path="/update-user" element={<UpdateUser />} />
+        <Route
+          path="/update-user"
+          element={
+            <AuthUser>
+              <UpdateUser />
+            </AuthUser>
+          }
+        />
       </Routes>
       <ToastContainer />
     </>
