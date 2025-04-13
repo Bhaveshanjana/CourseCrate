@@ -7,7 +7,7 @@ module.exports.createAdmin = async ({
     email,
 }) => {
     if(!firstname || !email || !password){
-        throw new Error ("Please provide all filds")
+        throw new Error ("Please provide all fields")
     }
     const admin = await adminModel.create({
         adminname: {

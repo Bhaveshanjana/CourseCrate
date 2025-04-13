@@ -15,7 +15,6 @@ module.exports.authUser = async (req, res, next) => {
   if (isBlackListed) {
     return res.status(401).json({ errors: "invalid user" });
   }
-
   try {
     const decode = jwt.verify(token, process.env.JWT_SECRET);
     const user = await usermodel.findById(decode._id);
