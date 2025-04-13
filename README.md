@@ -9,7 +9,7 @@ CourseCrate is a full-featured e-commerce platform for buying and selling online
 
 
 ### 👤 Authentication
-- Secure login and registration (JWT-based or session-based)
+- Secure login and registration (JWT-based)
 - Role-based access control (Admin / User)
 - Password reset & update.
 
@@ -60,7 +60,7 @@ env.example
 
 ```bash
 cd Frontend && npm i
-cd backend && npm i
+cd Backend && npm i
 
 ```
 ### 4. Run the development server
@@ -77,5 +77,5 @@ cd backend && npm i
 
 ## 💬 Contact
 
-For any feedback, suggestions or collaborations: 📧 [bhaveshanjana58@.com]
+For any feedback, suggestions or collaborations: 📧 [bhaveshanjana58@gmail.com]
 
