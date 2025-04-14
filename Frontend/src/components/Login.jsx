@@ -39,7 +39,7 @@ const login = () => {
         toast.error(toast.error(`${error.response?.data.message}`));
       }
 
-      toast.error(`${error.response?.data.errors[0].msg}`);
+      toast.error(`${error.response?.data.errors[0]?.msg}`);
     }
     setEmail("");
     setPassword("");

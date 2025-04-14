@@ -24,13 +24,13 @@ const Menu = ({ open }) => {
                 to={"/Purchased"}
                 className="hover:text-blue-500 transition-all duration-200"
               >
-                Purchased Course
+                Purchased
               </Link>
               <Link
-                to={"/buy/:courseId"}
+                to={"/courses"}
                 className="hover:text-blue-500 transition-all duration-200"
               >
-                Buy Course
+                Courses
               </Link>
             </div>
           </div>

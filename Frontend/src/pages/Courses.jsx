@@ -20,7 +20,6 @@ const Courses = () => {
         );
 
         setCourse(res.data.courses);
-        
       } catch (error) {
         const message =
           error.response?.data?.message ||
@@ -33,10 +32,10 @@ const Courses = () => {
   });
 
   return (
-    <div className="bg-blue-950/30 min-h-screen">
+    <div className="bg-blue-950/30 min-h-screen overflow-y-auto max-h-[80vh] custom-scrollbar">
       <div>
         {/* Navbar */}
-        <div className="bg-gray-700 flex justify-between items-center p-2 px-4">
+        <div className="bg-gray-700 flex justify-between items-center p-2 px-4 custom-scrollbar">
           {/* Logo / Title */}
           <h2 className="text-gray-300 text-lg font-semibold tracking-wider">
             CourseCrate
@@ -74,7 +73,7 @@ const Courses = () => {
 
       {/* Course data */}
 
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 p-4">
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 p-4 ">
         {course.map((course) => (
           <div key={course._id} className="max-w-lg mx-auto p-4">
             <div className="bg-gray-500 rounded-md overflow-hidden">
@@ -99,9 +98,12 @@ const Courses = () => {
                 </p>
                 <p className="text-green-400">20% off</p>
               </div>
-              <button className="bg-red-400/80 rounded-md text-xs m-1 mx-2 p-0.5 mb-2 text-white px-2 cursor-pointer md:text-[18px] hover:bg-[#522c2c67] hover:transition-all hover:translate-y-0.5">
+              <Link
+                to={`/buy/${course._id}`} //pass course id in url so req.params get it
+                className="bg-red-400/80 rounded-md text-xs m-1 mx-2 p-0.5 mb-2 text-white px-2 cursor-pointer md:text-[18px] hover:bg-[#522c2c67] hover:transition-all hover:translate-y-0.5"
+              >
                 Buy now
-              </button>
+              </Link>
             </div>
           </div>
         ))}

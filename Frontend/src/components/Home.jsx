@@ -116,7 +116,7 @@ const home = () => {
 
   return (
     <>
-      <div className="bg-gradient-to-r from-gray-900  min-h-screen">
+      <div className="bg-gradient-to-r from-gray-900  min-h-screen overflow-y-auto max-h-[80vh] custom-scrollbar">
         {/* Navbar */}
 
         <div className="flex justify-between pt-6 mx-6">
