@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const adminModel = require("../models/admin.model");
 
 module.exports.authAdmin = async (req, res, next) => {
-    const token = req.cookies.token || req.headers.authrorization?.split("  ")[1];
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
     if (!token) {
         return res.status(401).json({ errors: "Unauthorized admin" });
     }

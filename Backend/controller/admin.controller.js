@@ -48,14 +48,7 @@ module.exports.logout = async (req, res) => {
 };
 
 module.exports.getprofile = async (req, res) => {
-  try {
-    const profile = await adminModel.find({});
-    res.status(200).json(profile);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ errors: "Internal server error while getting admin profiles" });
-  }
+  res.status(200).json({admin: req.admin})
 };
 
 module.exports.updateadmin = async (req, res) => {
@@ -70,7 +63,7 @@ module.exports.updateadmin = async (req, res) => {
       isVaild.password
     );
     if (!camparepassword) {
-      res.status(404).json({ errors: "Invaild email or password" });
+     return res.status(404).json({ errors: "Invaild email or password" });
     }
 
     const hashedPassword = await adminModel.hashPassword(newPassword);

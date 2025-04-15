@@ -112,11 +112,11 @@ module.exports.buyCourse = async (req, res) => {
 
   try {
     const existingCourse = await purchase.findOne({_id, courseId});
-    if (existingCourse) {
+    if (!existingCourse) {
       return res.status(400).json({ errors: "Course already purchased" });
     }
     const availableCourse = await couserModel.findById(courseId);
-    if (!availableCourse) {
+    if (availableCourse) {
       return res.status(400).json({ errors: "course not available" });
     }
 
