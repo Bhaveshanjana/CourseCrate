@@ -49,7 +49,7 @@ const UpdateUser = () => {
         <h2 className="text-gray-300 text-lg font-semibold tracking-wider ">
           CourseCrate
         </h2>
-        <Link to={"/"}>
+        <Link to={"/courses"}>
           <GoHome className="text-white text-2xl cursor-pointer hover:text-orange-400 transition-all duration-200" />
         </Link>
       </div>

@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { FaUser } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { RiMenu2Fill } from "react-icons/ri";
 import Menu from "./Menu";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { motion } from "motion/react";
 
 const Courses = () => {
   const [open, setOpen] = useState(false);
   const [course, setCourse] = useState([]);
+  const navigate = useNavigate();
+  const [showDropdown, setShowDropdown] = useState(false);
 
   // getting all courses
   useEffect(() => {
@@ -30,6 +33,30 @@ const Courses = () => {
     };
     courses();
   });
+
+  // log out function
+  const handleLogOut = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/users/logout`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      toast.success(`${response.data.message}`);
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        error.response?.data?.errors?.[0]?.msg ||
+        "Something went wrong. Please try again.";
+
+      toast.error(message);
+    }
+    localStorage.removeItem("token");
+    navigate("/log-in");
+  };
 
   return (
     <div className="bg-blue-950/30 min-h-screen overflow-y-auto max-h-[80vh] custom-scrollbar">
@@ -54,17 +81,41 @@ const Courses = () => {
           </div>
 
           {/* User icon */}
-          <div className="ml-4 flex gap-2 ">
-            <Link to={"/update-user"}>
-              <FaUser className="text-white text-xl cursor-pointer hover:text-blue-300 md:text-2xl" />
-            </Link>
-            <div
+          <div className="relative mx-2">
+            <FaUser
               onClick={() => {
-                setOpen(!open);
+                setShowDropdown(!showDropdown);
               }}
-            >
-              <RiMenu2Fill className="text-xl hover:text-blue-300 text-white cursor-pointer md:text-2xl" />
-            </div>
+              className="text-white text-xl cursor-pointer hover:text-blue-300 md:text-2xl"
+            />
+
+            {showDropdown && (
+              <motion.div
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="absolute -right-4 mt-4 bg-[#1b6165eb] rounded-md shadow-md w-28 text-sm space-y-2 "
+              >
+                <button
+                  className="w-full text-left my-2 px-4 hover:text-white cursor-pointer transition-all duration-200"
+                  onClick={() => navigate("/update-user")}
+                >
+                  Update User
+                </button>
+                <button
+                  className="w-full text-left px-4 mb-2 hover:text-white cursor-pointer transition-all duration-200"
+                  onClick={handleLogOut}
+                >
+                  Logout
+                </button>
+              </motion.div>
+            )}
+          </div>
+          <div
+            onClick={() => {
+              setOpen(!open);
+            }}
+          >
+            <RiMenu2Fill className="text-xl hover:text-blue-300 text-white cursor-pointer md:text-2xl" />
           </div>
         </div>
       </div>
@@ -76,21 +127,27 @@ const Courses = () => {
       <div className="grid sm:grid-cols-2 md:grid-cols-3 p-4 ">
         {course.map((course) => (
           <div key={course._id} className="max-w-lg mx-auto p-4">
-            <div className="bg-gray-500 rounded-md overflow-hidden">
+            <div className="bg-gray-500 rounded-md overflow-hidden ">
               <img
                 src={course.image.url}
                 alt=""
                 className="w-full h-full object-contain "
               />
               <div className="mx-2">
-                <h1 className=" text-md font-semibold md:text-lg capitalize">
+                <h1 className=" lg:text-lg text-sm capitalize text-gray-200">
+                  <span className="font-semibold text-white underline">
+                    Course:
+                  </span>{" "}
                   {course.title}
                 </h1>
                 <p className="text-white line-clamp-2 text-xs capitalize md:text-[15px]">
+                  <span className="font-semibold text-white underline lg:text-lg">
+                    Description:
+                  </span>{" "}
                   {course.description}
                 </p>
               </div>
-              <div className="flex justify-between mx-2 text-sm my-0.5 md:text-lg">
+              <div className="flex justify-between mx-2 text-sm my-0.5 lg:text-lg">
                 <p className="font-bold">
                   {" "}
                   ₹ 200{" "}
@@ -98,12 +155,14 @@ const Courses = () => {
                 </p>
                 <p className="text-green-400">20% off</p>
               </div>
-              <Link
-                to={`/buy/${course._id}`} //pass course id in url so req.params get it
-                className="bg-red-400/80 rounded-md text-xs m-1 mx-2 p-0.5 mb-2 text-white px-2 cursor-pointer md:text-[18px] hover:bg-[#522c2c67] hover:transition-all hover:translate-y-0.5"
-              >
-                Buy now
-              </Link>
+              <div className="mb-2 hover:transition-all hover:translate-y-0.5 inline-block">
+                <Link
+                  to={`/buy/${course._id}`} //pass course id in url so req.params get it
+                  className="bg-red-400/80 rounded-md text-xs mx-2  p-0.5 text-white px-2 cursor-pointer lg:text-[18px] hover:bg-[#522c2c67] "
+                >
+                  Buy now
+                </Link>
+              </div>
             </div>
           </div>
         ))}

@@ -57,10 +57,10 @@ const signup = () => {
               to={"/log-in"}
               className="bg-white border p-0.5 px-4 rounded-md cursor-pointer hover:bg-yellow-400/60 transition-all duration-300 hover:text-white"
             >
-              Login
+              Login as User
             </Link>
-            <button className="bg-orange-400/90  px-2 rounded-md text-lg cursor-pointer">
-              Join Now
+            <button className="bg-orange-400/90  px-2 rounded-md text-lg cursor-pointer hover:bg-white transition-all duration-300">
+              Log in as admin
             </button>
             <Link to={"/"}>
               <GoHome className="text-white text-2xl cursor-pointer hover:text-orange-400 transition-all duration-200" />

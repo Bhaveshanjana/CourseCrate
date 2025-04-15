@@ -54,7 +54,7 @@ const home = () => {
           },
         }
       );
-      toast.success(`${response.data.message}`)
+      toast.success(`${response.data.message}`);
       setIsloggedIn(false);
     } catch (error) {
       const message =
@@ -71,7 +71,7 @@ const home = () => {
   //settings for slids
   var settings = {
     dots: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
@@ -191,13 +191,25 @@ const home = () => {
                       alt=""
                       className="w-full object-contain"
                     />
-                    <div className="p-1 text-center">
+                    <div className="p-1 text-center space-y-2">
                       <h2 className="text-[18px] text-white">
                         {courses.title}
                       </h2>
-                      <button className="px-3 bg-green-500/60 rounded-md my-2 hover:text-white transition-all duration-200 cursor-pointer">
-                        Enroll now
-                      </button>
+                      {isloggedIn ? (
+                        <Link
+                          to={"/courses"}
+                          className="px-3 bg-green-500/60 rounded-md p-0.5 hover:text-white transition-all duration-200 cursor-pointer"
+                        >
+                          Buy now
+                        </Link>
+                      ) : (
+                        <Link
+                          to={"/log-in"}
+                          className="px-3 bg-green-500/60 rounded-md p-0.5 hover:text-white transition-all duration-200 cursor-pointer"
+                        >
+                          Log in to buy
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>

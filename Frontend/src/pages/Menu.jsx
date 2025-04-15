@@ -1,8 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 
 const Menu = ({ open }) => {
+  const location = useLocation();
   return (
     <AnimatePresence mode="wait">
       {open && (
@@ -26,12 +27,14 @@ const Menu = ({ open }) => {
               >
                 Purchased
               </Link>
-              <Link
-                to={"/courses"}
-                className="hover:text-blue-500 transition-all duration-200"
-              >
-                Courses
-              </Link>
+              {location.pathname !== "/courses" && (
+                <Link
+                  to={"/courses"}
+                  className="hover:text-blue-500 transition-all duration-200"
+                >
+                  Courses
+                </Link>
+              )}
             </div>
           </div>
         </motion.div>

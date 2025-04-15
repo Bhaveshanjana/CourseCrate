@@ -2,15 +2,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa6";
 import { RiMenu2Fill } from "react-icons/ri";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Menu from "./Menu";
-import { IoSearchOutline } from "react-icons/io5";
 
 const BuyCourse = () => {
   const { courseId } = useParams();
   const [open, setOpen] = useState(false);
   const [course, setCourse] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const courseByData = async () => {
@@ -24,7 +24,6 @@ const BuyCourse = () => {
           }
         );
         setCourse(res.data);
-        // console.log(res.data);
       } catch (error) {
         const message =
           error.response?.data?.message ||
@@ -48,6 +47,7 @@ const BuyCourse = () => {
         }
       );
       toast.success(`${res.data.message}`);
+      navigate("/");
     } catch (error) {
       const message =
         error.response?.data?.message ||
@@ -56,7 +56,6 @@ const BuyCourse = () => {
       toast.error(message);
     }
   };
-  // handelBuyCourses();
 
   return (
     <>
@@ -68,19 +67,6 @@ const BuyCourse = () => {
             <h2 className="text-gray-300 text-lg font-semibold tracking-wider">
               CourseCrate
             </h2>
-
-            {/* Search bar */}
-            <div className="flex-1 flex justify-center md:justify-end ml-4 ">
-              <div className="relative w-full max-w-md">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="w-full pl-3 pr-10 py-1.5 rounded-md border border-[#c8ced8] bg-transparent text-white shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
-                <IoSearchOutline className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-xl cursor-pointer hover:text-blue-300" />
-              </div>
-            </div>
-
             {/* User icon */}
             <div className="ml-4 flex gap-2 ">
               <Link to={"/update-user"}>
@@ -100,8 +86,23 @@ const BuyCourse = () => {
         {/* Hamburger */}
         <Menu open={open} />
 
-        <div className="bg-gray-400 w-3xl mx-auto">
-          <img src={course.courses?.image?.url} alt="" className=" " />
+        <div className="px-4">
+          <div className="bg-gray-400 max-w-md md:max-w-xl mx-auto p-4 mt-9 rounded-md text-base md:text-2xl flex flex-col items-center">
+            <p className="mb-2 text-center">
+              Course Name:{" "}
+              <span className="text-white ">{course.courses?.title}</span>
+            </p>
+            <p className="mb-4 text-center">
+              Course Price:{" "}
+              <span className="text-white ">{course.courses?.price} $</span>
+            </p>
+            <button
+              onClick={handelBuyCourses}
+              className="bg-[#08242781] rounded-md text-sm md:text-base px-4 py-2 text-white cursor-pointer hover:translate-y-1 hover:bg-[#522c2cbb] transition duration-300"
+            >
+              Buy Now
+            </button>
+          </div>
         </div>
       </div>
     </>
