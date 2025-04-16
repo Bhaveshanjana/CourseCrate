@@ -84,15 +84,20 @@ module.exports.updateUser = async (req, res) => {
 };
 
 module.exports.purchased = async (req, res) => {
-  const { userId } = req.user;
+  const userId = req.user._id;
 
   try {
-    //promise run both quries parallel and store it
-    const [purchased, courseData] = await Promise.all([
-      purchase.find(userId),
-      course.find({ userId }),
-    ]);
-    
+    const purchased = await purchase.find({ userId });
+
+    let purchasedCourseId = [];
+
+    for (let i = 0; i < purchased.length; i++) {
+      purchasedCourseId.push(purchased[i].courseId);
+    }
+    const courseData = await course.find({
+      _id: { $in: purchasedCourseId },
+    });
+
     res.status(201).json({ purchased, courseData });
   } catch (error) {
     res

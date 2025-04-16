@@ -1,6 +1,5 @@
 const blackListToken = require("../models/blackListToken");
 const usermodel = require("../models/user.model");
-// const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 module.exports.authUser = async (req, res, next) => {
@@ -19,7 +18,7 @@ module.exports.authUser = async (req, res, next) => {
     const decode = jwt.verify(token, process.env.JWT_SECRET);
     const user = await usermodel.findById(decode._id);
 
-    req.user = user;
+    req.user = user._id;
     return next();
   } catch (error) {
     res
