@@ -11,17 +11,18 @@ CourseCrate is a full-featured e-commerce platform for buying and selling online
 ### 👤 Authentication
 - Secure login and registration (JWT-based)
 - Role-based access control (Admin / User)
-- Password reset & update.
+- Password, Email reset & update.
 
 ### 🛒 User Panel
-- Working on user Ui.
+- User can view and purchase courses.
+- User can see purchased course.
+- Search functionality available.
 
 ### 🛠 Admin Panel
 - Working on admin Ui.
 
 ### 🧪 Upcoming Improvements
-- Intigration Backend with Ui
-- Framer Motion.
+- Intigration of Admin.
 
 
 ## 🧰 Tech Stack
@@ -71,7 +72,7 @@ cd Backend && npm i
 
 #### In another terminal
 - cd Backend
-- npm run dev
+- npx nodemon
 
 ---
 
