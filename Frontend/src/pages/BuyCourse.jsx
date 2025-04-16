@@ -47,7 +47,7 @@ const BuyCourse = () => {
         }
       );
       toast.success(`${res.data.message}`);
-      navigate("/");
+      navigate("/Purchased");
     } catch (error) {
       const message =
         error.response?.data?.message ||
@@ -103,6 +103,9 @@ const BuyCourse = () => {
               Buy Now
             </button>
           </div>
+        </div>
+        <div>
+          <p className="text-center text-lg text-white mt-4">Payment option cumming soon....</p>
         </div>
       </div>
     </>

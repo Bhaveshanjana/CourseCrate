@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
+import { useNavigate } from "react-router-dom";
 
 const Purchase = () => {
   const [purchased, setPurchased] = useState([]);
+  const navigate = useNavigate();
 
   // Api call for user purchased courses
   useEffect(() => {
@@ -30,55 +32,44 @@ const Purchase = () => {
       <Navbar />
 
       <div className="grid sm:grid-cols-2 md:grid-cols-3 p-4 ">
-        {purchased.map((course) => (
-          <div key={course._id} className="max-w-lg mx-auto p-4">
-            <div className="bg-gray-500 rounded-md overflow-hidden">
-              <img
-                src={course.image.url}
-                alt=""
-                className="w-full h-full object-contain "
-              />
-              <div className="mx-2 mb-2">
-                <h1 className=" text-md font-semibold md:text-lg capitalize">
-                  {course.title}
-                </h1>
-                <p className="text-white line-clamp-2 text-xs capitalize md:text-[15px]">
-                  {course.description}
-                </p>
+        {purchased.length > 0 ? (
+          purchased.map((course) => (
+            <div key={course._id} className="max-w-lg mx-auto p-4">
+              <div className="bg-gray-500 rounded-md overflow-hidden">
+                <img
+                  src={course.image.url}
+                  alt=""
+                  className="w-full h-full object-contain "
+                />
+                <div className="mx-2 mb-2">
+                  <h1 className=" text-md font-semibold md:text-lg capitalize">
+                    {course.title}
+                  </h1>
+                  <p className="text-white line-clamp-2 text-xs capitalize md:text-[15px]">
+                    {course.description}
+                  </p>
+                </div>
               </div>
             </div>
+          ))
+        ) : (
+          <div className="bg-gray-500 rounded-md mx-5 mt-6 max-w-3xl md:mx-auto text-white col-span-full">
+            <p className="text-center p-4 text-sm md:text-xl">
+              No courses found
+              <span
+                onClick={() => {
+                  navigate("/courses");
+                }}
+                className="cursor-pointer mx-2 underline text-blue-400/90 relative inline-block duration-200 hover:-translate-y-0.5 hover:text-blue-300 "
+              >
+                Click here to purchase
+              </span>
+            </p>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
 };
 
 export default Purchase;
-
-{
-  /* <div>
-Navbar
-<div className="bg-gray-700 flex justify-between items-center p-2 px-4 custom-scrollbar">
-  Logo / Title
-  <h2 className="text-gray-300 text-lg font-semibold tracking-wider">
-    CourseCrate
-  </h2>
-
-  User icon 
-  <div className="ml-4 flex gap-2 ">
-    <Link to={"/update-user"}>
-      <FaUser className="text-white text-xl cursor-pointer hover:text-blue-300 md:text-2xl" />
-    </Link>
-    <div
-      onClick={() => {
-        setOpen(!open);
-      }}
-    >
-      <RiMenu2Fill className="text-xl hover:text-blue-300 text-white cursor-pointer md:text-2xl" />
-    </div>
-  </div>
-</div>
-</div> 
-<Menu open={open} />*/
-}

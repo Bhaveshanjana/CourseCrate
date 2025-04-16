@@ -13,6 +13,7 @@ const Courses = () => {
   const [course, setCourse] = useState([]);
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // getting all courses
   useEffect(() => {
@@ -58,6 +59,13 @@ const Courses = () => {
     navigate("/log-in");
   };
 
+  //Search functionality
+  const filteredCourse = course.filter(
+    (course) =>
+      course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      course.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="bg-blue-950/30 min-h-screen overflow-y-auto max-h-[80vh] custom-scrollbar">
       <div>
@@ -73,6 +81,10 @@ const Courses = () => {
             <div className="relative w-full max-w-md">
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                }}
                 placeholder="Search..."
                 className="w-full pl-3 pr-10 py-1.5 rounded-md border border-[#c8ced8] bg-transparent text-white shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
@@ -125,47 +137,53 @@ const Courses = () => {
       {/* Course data */}
 
       <div className="grid sm:grid-cols-2 md:grid-cols-3 p-4 ">
-        {course.map((course) => (
-          <div key={course._id} className="max-w-lg mx-auto p-4">
-            <div className="bg-gray-500 rounded-md overflow-hidden ">
-              <img
-                src={course.image.url}
-                alt=""
-                className="w-full h-full object-contain "
-              />
-              <div className="mx-2">
-                <h1 className=" lg:text-lg text-sm capitalize text-gray-200">
-                  <span className="font-semibold text-white underline">
-                    Course:
-                  </span>{" "}
-                  {course.title}
-                </h1>
-                <p className="text-white line-clamp-2 text-xs capitalize md:text-[15px]">
-                  <span className="font-semibold text-white underline lg:text-lg">
-                    Description:
-                  </span>{" "}
-                  {course.description}
-                </p>
-              </div>
-              <div className="flex justify-between mx-2 text-sm my-0.5 lg:text-lg">
-                <p className="font-bold">
-                  {" "}
-                  ₹ 200{" "}
-                  <span className="line-through text-red-300/90 ">500</span>
-                </p>
-                <p className="text-green-400">20% off</p>
-              </div>
-              <div className="mb-2 hover:transition-all hover:translate-y-0.5 inline-block">
-                <Link
-                  to={`/buy/${course._id}`} //pass course id in url so req.params get it
-                  className="bg-red-400/80 rounded-md text-xs mx-2  p-0.5 text-white px-2 cursor-pointer lg:text-[18px] hover:bg-[#522c2c67] "
-                >
-                  Buy now
-                </Link>
+        {filteredCourse.length > 0 ? (
+          filteredCourse.map((course) => (
+            <div key={course._id} className="max-w-lg mx-auto p-4">
+              <div className="bg-gray-500 rounded-md overflow-hidden ">
+                <img
+                  src={course.image.url}
+                  alt=""
+                  className="w-full h-full object-contain "
+                />
+                <div className="mx-2">
+                  <h1 className=" lg:text-lg text-sm capitalize text-gray-200">
+                    <span className="font-semibold text-white underline">
+                      Course:
+                    </span>{" "}
+                    {course.title}
+                  </h1>
+                  <p className="text-white line-clamp-2 text-xs capitalize md:text-[15px]">
+                    <span className="font-semibold text-white underline lg:text-lg">
+                      Description:
+                    </span>{" "}
+                    {course.description}
+                  </p>
+                </div>
+                <div className="flex justify-between mx-2 text-sm my-0.5 lg:text-lg">
+                  <p className="font-bold">
+                    {" "}
+                    ₹ {course.price}{" "}
+                    <span className="line-through text-red-300/90 ">990</span>
+                  </p>
+                  <p className="text-green-400">20% off</p>
+                </div>
+                <div className="mb-2 hover:transition-all hover:translate-y-0.5 inline-block">
+                  <Link
+                    to={`/buy/${course._id}`} //pass course id in url so req.params get it
+                    className="bg-red-400/80 rounded-md text-xs mx-2  p-0.5 text-white px-2 cursor-pointer lg:text-[18px] hover:bg-[#522c2c67] "
+                  >
+                    Buy now
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="text-white text-center col-span-full mt-4">
+            No courses found.
+          </p>
+        )}
       </div>
     </div>
   );
