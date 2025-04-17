@@ -5,22 +5,27 @@ const couserModel = require("../models/course.model");
 const purchase = require("../models/buyCourse.model");
 
 module.exports.createCourse = async (req, res) => {
-  const {_id} = req.admin;
-  
+  const adminId = req.adminId;
+
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
   const { title, price, description } = req.body;
+  if (!title || !description || !price) {
+    return res.status(400).json({ errors: "All fields are required" });
+  }
   const { image } = req.files;
-  if (!req.files) {
-    return res.status(400).json({ errors: "Please provide an image" });
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).json({ errors: "No file uploaded" });
   }
   const formates = ["image/png", "image/jpeg"];
-  if (!formates) {
+  if (!formates.includes(image.mimetype)) {
     return res
       .status(400)
-      .json({ errors: "invalid file formates only Jpeg and png supported" });
+      .json({
+        errors: "Invalid file format. Only JPEG and PNG are supported.",
+      });
   }
 
   //upload img to cloud-
@@ -43,41 +48,45 @@ module.exports.createCourse = async (req, res) => {
       url: cloud_response.secure_url,
     },
     title,
-    _id
+    adminId,
   });
   return res.status(200).json({ course });
 };
 
 module.exports.updateCourse = async (req, res) => {
-  const{_id} = req.admin;
+  const { _id } = req.admin;
   const { courseId } = req.params;
   const { title, description, price, image } = req.body;
 
   try {
     const newCourse = await couserModel.updateOne(
-      { _id: courseId,
-        creatorId:_id
-       },
+      { _id: courseId, creatorId: _id },
       { description, price, title, image }
     );
     res.status(200).json({ message: "Course updated successfully" });
   } catch (error) {
-    res.status(500).json({ errors: "Internal server Error while updating course" });
+    res
+      .status(500)
+      .json({ errors: "Internal server Error while updating course" });
   }
 };
 
 module.exports.deleteCourse = async (req, res) => {
   const { courseId } = req.params;
-  const{_id} = req.admin;
+  const { _id } = req.admin;
   try {
-    const newData = await couserModel.findOneAndDelete({ _id: courseId, creatorId:_id });
+    const newData = await couserModel.findOneAndDelete({
+      _id: courseId,
+      creatorId: _id,
+    });
     if (!newData) {
       res.status(404).json({ errors: "Course not found" });
     }
     res.status(200).json({ message: "Course deleted successfully" });
   } catch (error) {
-    res.status(500).json({ errors: "Internal server Error while deleting course" });
-    
+    res
+      .status(500)
+      .json({ errors: "Internal server Error while deleting course" });
   }
 };
 
@@ -89,7 +98,9 @@ module.exports.getAllCourse = async (req, res) => {
     }
     res.status(404).json({ errors: "No course found create one to show here" });
   } catch (error) {
-    return res.status(500).json({ errors: "Internal server error while getting courses" });
+    return res
+      .status(500)
+      .json({ errors: "Internal server error while getting courses" });
   }
 };
 
@@ -111,7 +122,7 @@ module.exports.buyCourse = async (req, res) => {
   const { courseId } = req.params;
 
   try {
-    const existingCourse = await purchase.findOne({userId:_id, courseId});
+    const existingCourse = await purchase.findOne({ userId: _id, courseId });
     if (existingCourse) {
       return res.status(400).json({ errors: "Course already purchased" });
     }
@@ -124,7 +135,9 @@ module.exports.buyCourse = async (req, res) => {
       _id,
       courseId,
     });
-    return res.status(200).json({ message: "course purchased successfully",createCourse });
+    return res
+      .status(200)
+      .json({ message: "course purchased successfully", createCourse });
   } catch (error) {
     res
       .status(500)
