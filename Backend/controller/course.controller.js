@@ -5,7 +5,7 @@ const couserModel = require("../models/course.model");
 const purchase = require("../models/buyCourse.model");
 
 module.exports.createCourse = async (req, res) => {
-  const adminId = req.adminId;
+  const _id = req.admin;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -21,11 +21,9 @@ module.exports.createCourse = async (req, res) => {
   }
   const formates = ["image/png", "image/jpeg"];
   if (!formates.includes(image.mimetype)) {
-    return res
-      .status(400)
-      .json({
-        errors: "Invalid file format. Only JPEG and PNG are supported.",
-      });
+    return res.status(400).json({
+      errors: "Invalid file format. Only JPEG and PNG are supported.",
+    });
   }
 
   //upload img to cloud-
@@ -48,21 +46,31 @@ module.exports.createCourse = async (req, res) => {
       url: cloud_response.secure_url,
     },
     title,
-    adminId,
+    _id,
   });
   return res.status(200).json({ course });
 };
 
 module.exports.updateCourse = async (req, res) => {
-  const { _id } = req.admin;
+  const _id = req.admin;
   const { courseId } = req.params;
   const { title, description, price, image } = req.body;
 
   try {
-    const newCourse = await couserModel.updateOne(
+    const courseSearch = await couserModel.findById(courseId);
+    if (!courseSearch) {
+      return res.status(404).json({ errors: "Course not found" });
+    }
+
+    const newCourse = await couserModel.findOneAndUpdate(
       { _id: courseId, creatorId: _id },
       { description, price, title, image }
     );
+    if (!newCourse) {
+      return res
+        .status(404)
+        .json({ errors: "can't update, created by other admin" });
+    }
     res.status(200).json({ message: "Course updated successfully" });
   } catch (error) {
     res
@@ -73,14 +81,14 @@ module.exports.updateCourse = async (req, res) => {
 
 module.exports.deleteCourse = async (req, res) => {
   const { courseId } = req.params;
-  const { _id } = req.admin;
+  const _id = req.adminId;
   try {
     const newData = await couserModel.findOneAndDelete({
       _id: courseId,
       creatorId: _id,
     });
     if (!newData) {
-      res.status(404).json({ errors: "Course not found" });
+      return res.status(404).json({ errors: "Course not found" });
     }
     res.status(200).json({ message: "Course deleted successfully" });
   } catch (error) {

@@ -29,7 +29,7 @@ router.delete("/delete/:courseId", authAdmin.authAdmin, courseController.deleteC
 
 router.get("/getAllCourses",  courseController.getAllCourse);
 
-router.get("/:courseId", authUser.authUser, courseController.courseId);
+router.get("/:courseId", courseController.courseId);
 
 router.post("/buy/:courseId",authUser.authUser, courseController.buyCourse)
 
