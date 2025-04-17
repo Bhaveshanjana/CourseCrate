@@ -8,10 +8,18 @@ import Purchased from "./pages/User/Purchased";
 import { ToastContainer } from "react-toastify";
 import UpdateUser from "./pages/User/UpdateUser";
 import AuthUser from "./auth/UserProtectWrapper";
+import AdminHome from "./pages/Admin/AdminHome";
+import AdminLogin from "./pages/Admin/Login";
+import AdminSignup from "./pages/Admin/Signup";
+import UpdateAdmin from "./pages/Admin/UpdateAdmin";
+import AllCourse from "./pages/Admin/AllCourse";
+import CreateCourse from "./pages/Admin/CreateCourse";
+import AuthAdmin from "./auth/AdminProtectWrapper";
 
 function App() {
   return (
     <>
+      {/* User routes */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/log-in" element={<Login />} />
@@ -46,6 +54,44 @@ function App() {
             <AuthUser>
               <UpdateUser />
             </AuthUser>
+          }
+        />
+      </Routes>
+
+      {/* Admin routes */}
+      <Routes>
+        <Route
+          path="/Admin-home"
+          element={
+            <AuthAdmin>
+              <AdminHome />
+            </AuthAdmin>
+          }
+        />
+        <Route path="/Admin-Login" element={<AdminLogin />} />
+        <Route path="/Admin-Signup" element={<AdminSignup />} />
+        <Route
+          path="/Update-Admin"
+          element={
+            <AuthAdmin>
+              <UpdateAdmin />
+            </AuthAdmin>
+          }
+        />
+        <Route
+          path="/Get-course"
+          element={
+            <AuthAdmin>
+              <AllCourse />
+            </AuthAdmin>
+          }
+        />
+        <Route
+          path="/Create-course"
+          element={
+            <AuthAdmin>
+              <CreateCourse />
+            </AuthAdmin>
           }
         />
       </Routes>

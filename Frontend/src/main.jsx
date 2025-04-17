@@ -4,11 +4,14 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import UserContext from "./context/userContext.jsx";
+import AdminContext from "./context/AdminContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <UserContext>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <AdminContext>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </AdminContext>
   </UserContext>
 );

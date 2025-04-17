@@ -59,16 +59,18 @@ const login = () => {
             >
               Signup
             </Link>
-            <button className="bg-orange-400/90 p-0.5 px-3 rounded-md cursor-pointer hover:bg-white transition-all duration-200">
+            <Link 
+            to={"/Admin-Login"}
+            className="bg-orange-400/90 p-0.5 px-3 rounded-md cursor-pointer hover:bg-white transition-all duration-200">
               Join as admin
-            </button>
+            </Link>
             <Link to={"/"}>
               <GoHome className="text-white text-2xl cursor-pointer hover:text-orange-400 transition-all duration-200" />
             </Link>
           </div>
         </div>
 
-        {/* --Signup form-- */}
+        {/* --Login form-- */}
 
         <div className="mt-44 bg-gray-900 mx-auto max-w-[450px] rounded-md ">
           <h1 className="text-center pt-4 mb-2 text-xl text-white">
