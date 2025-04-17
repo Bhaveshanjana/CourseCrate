@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { GoHome } from "react-icons/go";
 
 const CreateCourse = () => {
   const [image, setImage] = useState(null);
@@ -37,7 +38,7 @@ const CreateCourse = () => {
       );
 
       toast.success("Course created successfully");
-      navigate("Admin-home");
+      navigate("/Admin-home");
     } catch (error) {
       const message =
         error.response?.data?.message ||
@@ -49,81 +50,98 @@ const CreateCourse = () => {
     }
   };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 text-white px-4 md:px-0">
-      <div className="w-full max-w-md bg-[#1f1f1f] p-8 rounded-xl shadow-lg">
-        <h2 className="text-2xl font-bold mb-6 text-center">Create Course</h2>
-
-        <form
-          onSubmit={(e) => {
-            handleSubmit(e);
-          }}
-          className="space-y-5"
-        >
-          <div>
-            <label className="block mb-1">Title</label>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-              placeholder="Enter your course title"
-              className="w-full px-4 py-2 rounded-md bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-1">Description</label>
-            <input
-              type="text"
-              value={description}
-              onChange={(e) => {
-                setDescription(e.target.value);
-              }}
-              placeholder="Enter your course description"
-              className="w-full px-4 py-2 rounded-md bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-1">Price</label>
-            <input
-              type="number"
-              value={price}
-              onChange={(e) => {
-                setPrice(e.target.value);
-              }}
-              placeholder="Enter your course price"
-              className="w-full px-4 py-2 rounded-md bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2">Course Image</label>
-            {image && (
-              <img
-                src={image}
-                alt="Preview"
-                className="w-full h-40 object-cover rounded-md mb-2"
-              />
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 transition-colors py-2 rounded-md font-semibold"
-          >
-            Create Course
-          </button>
-        </form>
+    <>
+      <div>
+        {/* Navbar */}
+        <div className="bg-gray-700 flex justify-between items-center p-2 px-4 custom-scrollbar">
+          {/* Logo / Title */}
+          <h2 className="text-gray-300 text-lg font-semibold tracking-wider">
+            CourseCrate
+          </h2>
+          <GoHome
+            onClick={() => {
+              navigate("/Admin-home");
+            }}
+            className="text-2xl cursor-pointer transition-all hover:text-blue-500 duration-200"
+          />
+        </div>
       </div>
-    </div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 text-white px-4 md:px-0">
+        <div className="w-full max-w-md bg-[#1f1f1f] p-8 rounded-xl shadow-lg">
+          <h2 className="text-2xl font-bold mb-6 text-center">Create Course</h2>
+
+          <form
+            onSubmit={(e) => {
+              handleSubmit(e);
+            }}
+            className="space-y-5"
+          >
+            <div>
+              <label className="block mb-1">Title</label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+                placeholder="Enter your course title"
+                className="w-full px-4 py-2 rounded-md bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-blue-500"
+              />
+            </div>
+
+            <div>
+              <label className="block mb-1">Description</label>
+              <input
+                type="text"
+                value={description}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+                placeholder="Enter your course description"
+                className="w-full px-4 py-2 rounded-md bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-blue-500"
+              />
+            </div>
+
+            <div>
+              <label className="block mb-1">Price</label>
+              <input
+                type="number"
+                value={price}
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                }}
+                placeholder="Enter your course price"
+                className="w-full px-4 py-2 rounded-md bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-blue-500"
+              />
+            </div>
+
+            <div>
+              <label className="block mb-2">Course Image</label>
+              {image && (
+                <img
+                  src={image}
+                  alt="Preview"
+                  className="w-full h-40 object-cover rounded-md mb-2"
+                />
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 transition-colors py-2 rounded-md font-semibold"
+            >
+              Create Course
+            </button>
+          </form>
+        </div>
+      </div>
+    </>
   );
 };
 

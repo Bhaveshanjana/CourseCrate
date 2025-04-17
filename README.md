@@ -1,7 +1,7 @@
 
 # 📦 CourseCrate
 
-CourseCrate is a full-featured e-commerce platform for buying and selling online courses. The platform offers complete authentication, profile management, and role-based dashboards for both **users** and **admins**.
+CourseCrate is a full-featured, responsive e-commerce platform for buying and selling online courses. The platform offers complete authentication, profile management, and role-based dashboards for both **users** and **admins**.
 
 ---
 
@@ -14,15 +14,16 @@ CourseCrate is a full-featured e-commerce platform for buying and selling online
 - Password, Email reset & update.
 
 ### 🛒 User Panel
-- User can view and purchase courses.
-- User can see purchased course.
+- User view and purchase courses.
+- User see purchased course.
 - Search functionality available.
+- Easy to reset email, password.
 
 ### 🛠 Admin Panel
-- Working on admin Ui.
-
-### 🧪 Upcoming Improvements
-- Intigration of Admin.
+- Admin Update and delete course.
+- Course delete only by creator admin.
+- Easy to reset email, password.
+- Admin create new course.
 
 
 ## 🧰 Tech Stack

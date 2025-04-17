@@ -47,71 +47,67 @@ const login = () => {
 
   return (
     <>
-      <div className="">
-        {/* --Navbar-- */}
-
-        <div className=" flex justify-around space-x-250 ">
-          <h1 className="mt-5 text-2xl text-white">CourseCrate</h1>
-          <div className="mt-5 space-x-4 flex items-center">
+      <div className="min-h-screen flex flex-col bg-gray-900 px-4">
+        {/* Navbar */}
+        <div className="flex flex-wrap justify-center gap-4 ml-6 md:justify-between items-center py-4">
+          <h1 className="text-white text-2xl">CourseCrate</h1>
+          <div className="flex gap-3 mt-2 sm:mt-0">
             <Link
               to={"/sign-up"}
-              className="bg-white border p-0.5 px-4 rounded-md cursor-pointer hover:bg-yellow-400/60 transition-all duration-300 hover:text-white"
+              className="bg-white border px-4 py-1 rounded-md hover:bg-yellow-400/60 hover:text-white transition"
             >
               Signup
             </Link>
-            <Link 
-            to={"/Admin-Login"}
-            className="bg-orange-400/90 p-0.5 px-3 rounded-md cursor-pointer hover:bg-white transition-all duration-200">
-              Join as admin
+            <Link
+              to={"/Admin-Signup"}
+              className="bg-orange-400/90 px-3 py-1 rounded-md hover:bg-white hover:text-black transition"
+            >
+              Signup as admin
             </Link>
             <Link to={"/"}>
-              <GoHome className="text-white text-2xl cursor-pointer hover:text-orange-400 transition-all duration-200" />
+              <GoHome className="text-white text-2xl hover:text-orange-400 mt-1" />
             </Link>
           </div>
         </div>
 
-        {/* --Login form-- */}
-
-        <div className="mt-44 bg-gray-900 mx-auto max-w-[450px] rounded-md ">
-          <h1 className="text-center pt-4 mb-2 text-xl text-white">
-            Welcome to <span className="text-orange-300">Courseheaven</span>
-          </h1>
-          <p className="text-center text-lg text-white">
-            Login to access paid content
-          </p>
-          <form
-            onSubmit={(e) => {
-              handleSubmit(e);
-            }}
-            className="p-6 "
-          >
-            <div className="text-lg text-white space-y-2 ">
-              <p>Email</p>
-              <input
-                type="email"
-                value={email}
-                placeholder="example@gmail.com"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                className="p-2 bg-gray-700 w-full rounded-md"
-              />
-              <p>Password</p>
-              <input
-                type="password"
-                required
-                value={password}
-                placeholder="******"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                className="p-2 bg-gray-700 w-full rounded-md"
-              />
-              <button className="w-full bg-red-400 rounded-md p-1.5 mt-4 mb-2 cursor-pointer hover:bg-blue-950/80 transition-all duration-200">
+        {/* Login Form */}
+        <div className="flex-grow flex items-center justify-center">
+          <div className="w-full max-w-md bg-gray-800 p-6 rounded-xl shadow-lg">
+            <h1 className="text-xl text-center text-white font-bold mb-2">
+              Welcome to <span className="text-orange-300">Courseheaven</span>
+            </h1>
+            <p className="text-center text-sm text-gray-300 mb-4">
+              Login to access paid content
+            </p>
+            <form onSubmit={handleSubmit} className="space-y-4 text-white">
+              <div>
+                <label>Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="example@gmail.com"
+                  className="w-full p-2 rounded-md bg-gray-700 mt-1"
+                />
+              </div>
+              <div>
+                <label>Password</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="******"
+                  className="w-full p-2 rounded-md bg-gray-700 mt-1"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-red-400 hover:bg-red-500 text-white font-medium py-2 rounded-md transition"
+              >
                 Login
               </button>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </>

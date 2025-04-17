@@ -12,9 +12,10 @@ import AdminHome from "./pages/Admin/AdminHome";
 import AdminLogin from "./pages/Admin/Login";
 import AdminSignup from "./pages/Admin/Signup";
 import UpdateAdmin from "./pages/Admin/UpdateAdmin";
-import AllCourse from "./pages/Admin/AllCourse";
+import UpdateCourse from "./pages/Admin/UpdateCourse";
 import CreateCourse from "./pages/Admin/CreateCourse";
 import AuthAdmin from "./auth/AdminProtectWrapper";
+import Courses from "./pages/Admin/Courses";
 
 function App() {
   return (
@@ -24,14 +25,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/log-in" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
-        <Route
-          path="/courses"
-          element={
-            <AuthUser>
-              <Course />
-            </AuthUser>
-          }
-        />
+        <Route path="/courses" element={<Course />} />
         <Route
           path="/buy/:courseId"
           element={
@@ -79,14 +73,6 @@ function App() {
           }
         />
         <Route
-          path="/Get-course"
-          element={
-            <AuthAdmin>
-              <AllCourse />
-            </AuthAdmin>
-          }
-        />
-        <Route
           path="/Create-course"
           element={
             <AuthAdmin>
@@ -94,8 +80,35 @@ function App() {
             </AuthAdmin>
           }
         />
+        <Route
+          path="/Update-course/:courseId"
+          element={
+            <AuthAdmin>
+              <UpdateCourse />
+            </AuthAdmin>
+          }
+        />
+        <Route
+          path="/Course"
+          element={
+            <AuthAdmin>
+              <Courses />
+            </AuthAdmin>
+          }
+        />
       </Routes>
-      <ToastContainer />
+      <ToastContainer 
+      position="top-center"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={true}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      className="custom-toast"
+      />
     </>
   );
 }

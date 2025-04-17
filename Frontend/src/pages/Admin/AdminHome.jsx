@@ -88,19 +88,13 @@ const AdminHome = () => {
           >
             <div className="text-gray-200 bg-cyan-500/60 max-w-sm h-auto mx-auto rounded-xl">
               <div className="flex flex-col gap-4 p-2 text-lg">
-                <Link to="/courses" className="hover:text-blue-500">
-                  Home
+                <Link to="/Create-course" className="hover:text-blue-500">
+                  Create Course
                 </Link>
-                {location.pathname !== "/Purchased" && (
-                  <Link to="/Purchased" className="hover:text-blue-500">
-                    Purchased
-                  </Link>
-                )}
-                {location.pathname !== "/courses" && (
-                  <Link to="/courses" className="hover:text-blue-500">
-                    Courses
-                  </Link>
-                )}
+
+                <Link to="/Course" className="hover:text-blue-500">
+                  Courses
+                </Link>
               </div>
             </div>
           </motion.div>
@@ -111,17 +105,24 @@ const AdminHome = () => {
       <div className="hidden sm:flex h-screen">
         {/* Sidebar */}
         <div className="w-64 bg-gradient-to-b from-[#1f1f1f] to-[#2c2c2c] p-4 shadow-lg flex flex-col items-center text-white">
-          <p className="text-lg font-semibold mb-6 mt-12">
-            Hi, Admin
-          </p>
+          <p className="text-lg font-semibold mb-6 mt-12">Hi, Admin</p>
 
-          <button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 mb-2 rounded-md transition-all duration-200 cursor-pointer">
-            Update Course
-          </button>
-          <Link to={"/Create-course"} className="text-center w-full bg-orange-500 hover:bg-orange-600 text-white py-2 mb-2 rounded-md transition-all duration-200 cursor-pointer">
+          <Link
+            to={"/Course"}
+            className="text-center w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 mb-2 rounded-md transition-all duration-200 cursor-pointer"
+          >
+            Courses
+          </Link>
+          <Link
+            to={"/Create-course"}
+            className="text-center w-full bg-orange-500 hover:bg-orange-600 text-white py-2 mb-2 rounded-md transition-all duration-200 cursor-pointer"
+          >
             Create Course
           </Link>
-          <Link to={"/Update-Admin"} className="text-center w-full bg-rose-600 hover:bg-rose-700 text-white py-2 mb-2 rounded-md transition-all duration-200 cursor-pointer">
+          <Link
+            to={"/Update-Admin"}
+            className="text-center w-full bg-rose-600 hover:bg-rose-700 text-white py-2 mb-2 rounded-md transition-all duration-200 cursor-pointer"
+          >
             Update Admin
           </Link>
           <button
