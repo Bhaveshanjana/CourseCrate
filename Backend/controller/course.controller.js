@@ -64,7 +64,15 @@ module.exports.updateCourse = async (req, res) => {
 
     const newCourse = await couserModel.findOneAndUpdate(
       { _id: courseId, creatorId: _id },
-      { description, price, title, image }
+      {
+        description,
+        price,
+        title,
+        image: {
+          public_id: image?.public_id,
+          url: image?.url,
+        },
+      }
     );
     if (!newCourse) {
       return res
@@ -81,7 +89,7 @@ module.exports.updateCourse = async (req, res) => {
 
 module.exports.deleteCourse = async (req, res) => {
   const { courseId } = req.params;
-  const _id = req.adminId;
+  const _id = req.admin;
   try {
     const newData = await couserModel.findOneAndDelete({
       _id: courseId,

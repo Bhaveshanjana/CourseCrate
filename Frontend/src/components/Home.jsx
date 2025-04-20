@@ -189,7 +189,7 @@ const home = () => {
                     <img
                       src={courses.image.url}
                       alt=""
-                      className="w-full object-contain"
+                      className="w-full h-40 object-contain"
                     />
                     <div className="p-1 text-center space-y-2">
                       <h2 className="text-[18px] text-white">

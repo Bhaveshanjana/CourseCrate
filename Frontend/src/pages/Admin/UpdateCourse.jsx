@@ -28,11 +28,12 @@ const UpdateCourse = () => {
       );
 
       const course = res.data.courses;
+      
       setCourseData({
         title: course.title,
         description: course.description,
         price: course.price,
-        image: null, // we’ll re-upload if changed
+        image: course.image?.url, // we’ll re-upload if changed
       });
     } catch (error) {
       const message =
@@ -68,7 +69,7 @@ const UpdateCourse = () => {
     formData.append("description", courseData.description);
     formData.append("price", courseData.price);
     if (courseData.image) {
-      formData.append("image", courseData.image);
+      formData.append("imageUrl", courseData.image);
     }
 
     // Api call for updating course

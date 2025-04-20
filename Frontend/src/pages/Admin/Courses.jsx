@@ -45,6 +45,7 @@ const UpdateCourse = () => {
         error.response?.data?.errors?.[0]?.msg ||
         "Something went wrong. Please try again.";
       toast.error(message);
+      
     }
   };
   return (
@@ -71,9 +72,9 @@ const UpdateCourse = () => {
           <div key={course._id} className="max-w-lg mx-auto p-4">
             <div className="bg-gray-500 rounded-md overflow-hidden ">
               <img
-                src={course.image.url}
+                src={course.image?.url}
                 alt=""
-                className="w-full h-full object-contain "
+                className="w-full h-40 object-cover"
               />
               <div className="mx-2">
                 <h1 className=" lg:text-lg text-sm capitalize text-gray-200">

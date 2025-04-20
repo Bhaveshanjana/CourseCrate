@@ -144,7 +144,7 @@ const Courses = () => {
                 <img
                   src={course.image.url}
                   alt=""
-                  className="w-full h-full object-contain "
+                  className="w-full h-40 object-contain "
                 />
                 <div className="mx-2">
                   <h1 className=" lg:text-lg text-sm capitalize text-gray-200">
